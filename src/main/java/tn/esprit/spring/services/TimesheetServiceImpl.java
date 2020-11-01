@@ -38,7 +38,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	public int ajouterMission(Mission mission) {
 		l.info("In Add Mission : "+ mission);
 		missionRepository.save(mission);
-		l.info("Out Add Mission");
+		l.info("Out Add Mission ");
 		return mission.getId();
 	}
     
