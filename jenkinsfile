@@ -1,0 +1,42 @@
+properties([pipelineTriggers([githubPush()])])
+pipeline {
+    agent any 
+    stages{ 
+        stage('Checkout SCM') {
+            steps {
+                checkout([
+                 $class: 'GitSCM',
+                 branches: [[name: 'master']],
+                 userRemoteConfigs: [[
+                    url: 'https://github.com/AmineBNO/TimeSheet.git',
+                    credentialsId: '',
+                 ]]
+                ])
+            }
+        }   
+        stage('clone repo'){ 
+            steps{ 
+            	cleanWs()
+                bat "git clone https://github.com/AmineBNO/TimeSheet" 
+                 
+            } 
+        } 
+        stage('build & test'){ 
+            steps{ 
+                bat "mvn install -f TimeSheet" 
+            }} 
+        stage('Deploy'){ 
+            steps{ 
+                bat "mvn package -f TimeSheet" 
+                bat "mvn deploy -f TimeSheet" 
+                bat "mvn sonar:sonar -f TimeSheet"
+            }
+        }
+    } 
+    /* Cleanup workspace */
+    post {
+       always {
+           deleteDir()
+       }
+   }
+}
