@@ -8,7 +8,7 @@ class TimesheetApplicationTests {
 
 	@Test
 	void contextLoads() {
-		System.out.println("test3");
+		System.out.println("Jenkins");
 	}
 
 }
