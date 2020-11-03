@@ -1,19 +1,7 @@
-properties([pipelineTriggers([githubPush()])])
 pipeline {
     agent any 
     stages{ 
-        stage('Checkout SCM') {
-            steps {
-                checkout([
-                 $class: 'GitSCM',
-                 branches: [[name: 'master']],
-                 userRemoteConfigs: [[
-                    url: 'https://github.com/AmineBNO/TimeSheet.git',
-                    credentialsId: '',
-                 ]]
-                ])
-            }
-        }   
+
         stage('clone repo'){ 
             steps{ 
             	cleanWs()
@@ -33,10 +21,4 @@ pipeline {
             }
         }
     } 
-    /* Cleanup workspace */
-    post {
-       always {
-           deleteDir()
-       }
-   }
 }
