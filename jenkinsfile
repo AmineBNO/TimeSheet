@@ -5,7 +5,7 @@ pipeline {
         stage('clone repo'){ 
             steps{ 
             	cleanWs()
-                bat "git clone https://github.com/AmineBNO/TimeSheet" 
+                bat "git clone https://github.com/MedHammedi/CI-Project" 
                  
             } 
         } 
@@ -18,6 +18,12 @@ pipeline {
                 bat "mvn package -f TimeSheet" 
                 bat "mvn deploy -f TimeSheet" 
                 bat "mvn sonar:sonar -f TimeSheet"
+            }
+        }
+        stage("mail") {
+            steps {
+                mail bcc: '', body: '''Hello User the build of your project successed.
+                Jenkins.''', cc: '', from: '', replyTo: '', subject: 'Build succed', to:'hammedim7@gmail.com'
             }
         }
     } 
